@@ -1,9 +1,9 @@
 //
 //  QuizBrain.swift
-//  Quizzler-iOS13
+//  Quizzler
 //
 //  Created by Dmitry on 1/9/22.
-//  Copyright © 2022 The App Brewery. All rights reserved.
+//  Copyright © 2022. All rights reserved.
 //
 
 import Foundation
@@ -25,13 +25,25 @@ struct QuizBrain {
     ]
     
     var questionNumber = 0
+    var scoresTotal = 0
     
-    func checkAnswer(_ userAnswer: String) -> Bool {
+    mutating func checkAnswer(_ userAnswer: String) -> Bool {
         if userAnswer == quiz[questionNumber].answer {
+            scoresTotal += 1
             return true
         } else {
             return false
         }
+    }
+    
+    mutating func getScore() -> Int {
+        if questionNumber >= 1 && questionNumber < quiz.count {
+            return scoresTotal
+        } else {
+            scoresTotal = 0
+            return scoresTotal
+        }
+        
     }
     
     func getQuestionText() -> String {
@@ -43,7 +55,7 @@ struct QuizBrain {
         return progress
     }
     
-    func nextQuestion() {
+    mutating func nextQuestion() {
         if questionNumber + 1 < quiz.count {
             questionNumber += 1
         } else {
